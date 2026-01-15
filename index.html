@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Marwa's Birthday 💗</title>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            margin: 0;
+            background: linear-gradient(-45deg, #1e0524, #2e1065, #4a044e, #0f0518);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .font-cairo { font-family: 'Cairo', sans-serif; }
+        .font-amiri { font-family: 'Amiri', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+
+        /* --- GLASSMORPHISM SYSTEM --- */
+        .liquid-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-icon-container {
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 24px;
+        }
+
+        .liquid-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .liquid-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+        }
+
+        .liquid-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .liquid-btn:active { transform: scale(0.95); }
+        .liquid-btn-primary {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.7), rgba(168, 85, 247, 0.7));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            25% { transform: scale(1.1) rotate(-2deg); opacity: 0.9; }
+            50% { transform: scale(0.9) rotate(2deg); opacity: 1; }
+            75% { transform: scale(1.05) rotate(-1deg); opacity: 0.95; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-80px) scale(1.5); }
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
+        }
+        .animate-beat { animation: beat 1.5s ease-in-out infinite; }
+
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .animate-slide-up-content { animation: slideUpContent 0.8s ease-out forwards; }
+        @keyframes slideUpContent {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .visualizer-bar {
+            width: 4px;
+            background: linear-gradient(to top, #ec4899, #a855f7);
+            border-radius: 4px;
+            animation: visualize 0.6s ease-in-out infinite alternate;
+        }
+        @keyframes visualize {
+            0% { height: 5px; opacity: 0.5; }
+            100% { height: 30px; opacity: 1; }
+        }
+
+        /* Signature Animation */
+        .signature-path {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: dash 3s ease-in-out forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .signature-text {
+            opacity: 0;
+            animation: fadeInSig 1s ease-in-out 2.5s forwards;
+        }
+        @keyframes fadeInSig {
+            to { opacity: 1; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "canvas-confetti": "https://esm.sh/canvas-confetti@^1.9.4",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.26.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- ICONS (SVG Strings for performance) ---
+        const Icons = {
+            Heart: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>,
+            User: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+            Lock: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+            Volume2: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>,
+            VolumeX: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" x2="17" y1="9" y2="15"/><line x1="17" x2="23" y1="9" y2="15"/></svg>,
+            Wind: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>,
+            MailOpen: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>,
+            Send: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>,
+            Sparkles: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 3v4"/><path d="M3 9h4"/><path d="M3 5h4"/></svg>,
+            Music: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        };
+
+        // --- BACKGROUND COMPONENT (Magnetic Stars) ---
+        const HeartBackground = () => {
+            const containerRef = React.useRef(null);
+            const starsRef = React.useRef([]);
+            const mouseRef = React.useRef({ x: -1000, y: -1000 });
+
+            React.useEffect(() => {
+                const handleMove = (e) => {
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    mouseRef.current = { x: clientX, y: clientY };
+                    
+                    if(containerRef.current) {
+                        containerRef.current.style.background = `radial-gradient(600px circle at ${clientX}px ${clientY}px, rgba(167, 139, 250, 0.15), transparent 40%)`;
+                    }
+                };
+                
+                window.addEventListener('mousemove', handleMove);
+                window.addEventListener('touchmove', handleMove);
+
+                let frameId;
+                const animate = () => {
+                    starsRef.current.forEach(star => {
+                        if(!star) return;
+                        const baseX = parseFloat(star.dataset.x);
+                        const baseY = parseFloat(star.dataset.y);
+                        
+                        const starX = (baseX / 100) * window.innerWidth;
+                        const starY = (baseY / 100) * window.innerHeight;
+                        
+                        const dx = mouseRef.current.x - starX;
+                        const dy = mouseRef.current.y - starY;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        const maxDist = 300;
+
+                        if(dist < maxDist) {
+                            const force = (maxDist - dist) / maxDist;
+                            const moveX = dx * force * 0.2;
+                            const moveY = dy * force * 0.2;
+                            star.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.5)`;
+                            star.style.opacity = 1;
+                        } else {
+                            star.style.transform = `translate(0px, 0px) scale(1)`;
+                            star.style.opacity = 0.4;
+                        }
+                    });
+                    frameId = requestAnimationFrame(animate);
+                };
+                animate();
+
+                return () => {
+                    window.removeEventListener('mousemove', handleMove);
+                    window.removeEventListener('touchmove', handleMove);
+                    cancelAnimationFrame(frameId);
+                };
+            }, []);
+
+            return (
+                <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
+                    <div ref={containerRef} className="absolute inset-0 transition-opacity duration-300" />
+                    
+                    {Array.from({ length: 60 }).map((_, i) => {
+                        const left = Math.random() * 100;
+                        const top = Math.random() * 100;
+                        return (
+                            <div key={i} 
+                                ref={el => starsRef.current[i] = el}
+                                data-x={left} data-y={top}
+                                className="absolute bg-white rounded-full transition-transform duration-100 ease-out"
+                                style={{
+                                    left: `${left}%`, top: `${top}%`,
+                                    width: `${Math.random() * 2 + 1}px`, height: `${Math.random() * 2 + 1}px`,
+                                    opacity: 0.4
+                                }} 
+                            />
+                        );
+                    })}
+
+                    {Array.from({ length: 15 }).map((_, i) => (
+                        <div key={`float-${i}`} className="absolute text-pink-300/10 font-amiri font-bold blur-[1px] animate-[floatUp_20s_linear_infinite]"
+                            style={{
+                                left: `${Math.random() * 100}%`, 
+                                animationDelay: `${Math.random() * 20}s`,
+                                animationDuration: `${15 + Math.random() * 10}s`,
+                                fontSize: Math.random() > 0.5 ? '1.5rem' : '1rem',
+                                bottom: '-50px', opacity: 0
+                            }}>
+                            {['❤', 'Marwa', 'مروى'][Math.floor(Math.random() * 3)]}
+                        </div>
+                    ))}
+                    <style>{`@keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(-110vh); opacity: 0; } }`}</style>
+                </div>
+            );
+        };
+
+        // --- CAKE COMPONENT ---
+        const Cake = ({ isLit, onBlow }) => {
+            const [showSmoke, setShowSmoke] = React.useState(false);
+
+            React.useEffect(() => {
+                if (!isLit) {
+                    setShowSmoke(true);
+                    const timer = setTimeout(() => setShowSmoke(false), 2000);
+                    return () => clearTimeout(timer);
+                }
+            }, [isLit]);
+
+            return (
+                <div className="flex flex-col items-center justify-center py-10 relative z-10 animate-fade-in">
+                    <div className="relative mt-60 mb-20 transform scale-110 md:scale-125 transition-transform duration-1000">
+                        {/* Plate */}
+                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-80 h-16 bg-white/5 backdrop-blur-2xl rounded-[50%] shadow-2xl border border-white/10 z-0" />
+                        
+                        {/* Layers */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-28 bg-gradient-to-r from-pink-900 via-purple-900 to-pink-900 rounded-b-3xl z-10 overflow-hidden shadow-2xl">
+                             <div className="absolute inset-0 bg-white/5 opacity-50"></div>
+                        </div>
+                        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 w-64 h-12 bg-gradient-to-r from-pink-800 to-purple-800 rounded-[50%] z-10 shadow-inner"></div>
+                        <div className="absolute bottom-26 left-1/2 -translate-x-1/2 w-52 h-20 bg-gradient-to-r from-pink-800 via-purple-800 to-pink-800 rounded-b-3xl z-20"></div>
+                        <div className="absolute bottom-40 left-1/2 -translate-x-1/2 w-52 h-10 bg-gradient-to-r from-pink-700 to-purple-700 rounded-[50%] z-20 border-t border-white/10"></div>
+
+                        {/* Candles: 7 & 1 */}
+                        <div className="absolute bottom-[8.8rem] left-1/2 -translate-x-1/2 z-30 flex gap-4 items-end">
+                            {['7', '1'].map((num, i) => (
+                                <div key={i} className="relative group w-12 flex justify-center">
+                                    <div className={`absolute -top-10 left-1/2 -translate-x-1/2 transition-all duration-700 ${isLit ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+                                        <div className="w-5 h-10 bg-gradient-to-t from-orange-500 via-yellow-200 to-white rounded-[50%] animate-[flicker_0.8s_infinite_alternate] shadow-[0_0_30px_rgba(255,165,0,0.8)] origin-bottom"></div>
+                                    </div>
+                                    {showSmoke && (
+                                        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-4 h-24 bg-gray-400/20 blur-md rounded-full animate-[slideUp_2s_ease-out_forwards]"></div>
+                                    )}
+                                    <div className={`relative text-9xl font-bold font-cairo leading-none transform ${i===0 ? '-rotate-6' : 'rotate-3'}`}>
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-pink-200 to-pink-500" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>{num}</span>
+                                    </div>
+                                    <div className="absolute top-6 left-1/2 -translate-x-1/2 w-1 h-4 bg-black/30"></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="mt-16 h-24 flex items-center justify-center relative z-40">
+                        {isLit ? (
+                            <button onClick={onBlow} className="liquid-btn liquid-btn-primary px-12 py-5 font-bold text-xl flex items-center gap-4 shadow-[0_0_30px_rgba(236,72,153,0.4)] hover:scale-105 active:scale-95 transition-all">
+                                <span>إطفاء الشموع</span>
+                                <Icons.Wind />
+                            </button>
+                        ) : (
+                            <div className="font-cairo text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-white to-pink-300 animate-[pulse_2s_infinite]">
+                                🎉 كل عام وأنتِ بخير 🎉
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- TYPEWRITER COMPONENT ---
+        const Typewriter = ({ text, onComplete }) => {
+            const [display, setDisplay] = React.useState('');
+            React.useEffect(() => {
+                let i = 0;
+                const timer = setInterval(() => {
+                    setDisplay(prev => {
+                        if (i >= text.length) { clearInterval(timer); if(onComplete) onComplete(); return text; }
+                        const char = text.charAt(i);
+                        i++;
+                        return prev + char;
+                    });
+                }, 30);
+                return () => clearInterval(timer);
+            }, [text]);
+            return <div className="whitespace-pre-line leading-relaxed">{display}</div>;
+        };
+
+        // --- ENVELOPE MESSAGE ---
+        const EnvelopeMessage = ({ onWhatsApp }) => {
+            const [isOpen, setIsOpen] = React.useState(false);
+            const [wish, setWish] = React.useState(null);
+            const [msg, setMsg] = React.useState('');
+            const [showSignature, setShowSignature] = React.useState(false);
+
+            const messageText = `Happy Birthday, Marwa.\n\nI hope this new year of your life brings you peace, good health, and moments that make you genuinely smile.\nMay you find balance in your days, strength in your challenges, and comfort in the people and things that truly matter to you.\nI wish you success in everything you’re working toward, clarity in your choices, and calmness whenever life feels heavy.\nMay your efforts be rewarded, your heart stay light, and your path become clearer with every step you take.\nThank you for the moments that were shared, and I truly hope the days ahead treat you kindly.\n\nWishing you a year filled with growth, stability, and quiet happiness.`;
+
+            const handleWish = () => {
+                const wishes = ["ستكون سنة مليئة بالنجاح لمروى 🌟", "أيامك القادمة أجمل مما تتخيلين 💜", "السعادة سترافق خطواتك دائماً ✨", "كل أحلامك ستتحقق يا جميلة 🌸"];
+                setWish(wishes[Math.floor(Math.random() * wishes.length)]);
+                confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 }, colors: ['#a855f7', '#ec4899', '#fbbf24'] });
+            };
+
+            if (!isOpen) {
+                return (
+                    <button onClick={() => setIsOpen(true)} className="liquid-card w-full max-w-2xl mx-auto aspect-video flex flex-col items-center justify-center transform hover:scale-105 transition-all group animate-fade-in mt-10">
+                        <div className="p-6 rounded-full bg-pink-500/20 mb-4 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
+                            <div className="text-pink-400"><Icons.MailOpen /></div>
+                        </div>
+                        <span className="text-2xl font-amiri font-bold">رسالة لـ Marwa 💌</span>
+                    </button>
+                );
+            }
+
+            return (
+                <div className="animate-slide-up-content liquid-card p-8 md:p-12 w-full max-w-3xl mx-auto mt-10 border-pink-200/20 bg-pink-900/10">
+                    <h2 className="text-4xl font-bold text-center mb-8 font-amiri text-pink-100">Happy Birthday Marwa</h2>
+                    <div className="text-lg md:text-xl font-tajawal text-center text-gray-100">
+                        <Typewriter text={messageText} onComplete={() => setShowSignature(true)} />
+                    </div>
+
+                    {/* Signature */}
+                    {showSignature && (
+                        <div className="mt-8 flex justify-end px-4">
+                            <div className="relative w-40 h-20">
+                                <svg viewBox="0 0 200 100" className="w-full h-full">
+                                    <path d="M20,60 C40,40 60,80 80,60 C90,50 90,30 80,30 C70,30 70,70 90,70 C110,70 120,40 140,50 C150,55 150,65 140,65 C130,65 160,60 180,50" 
+                                        fill="none" stroke="#ec4899" stroke-width="3" stroke-linecap="round" className="signature-path" />
+                                    <text x="100" y="85" fill="#ec4899" font-size="20" font-family="Great Vibes" text-anchor="middle" className="signature-text">Ismail</text>
+                                </svg>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="mt-8 py-6 border-t border-white/10 flex flex-col items-center">
+                        {!wish ? (
+                            <button onClick={handleWish} className="liquid-btn px-6 py-3 flex items-center gap-2 bg-purple-600/30">
+                                <span className="text-yellow-300 animate-spin"><Icons.Sparkles/></span>
+                                <span>أمنية اليوم</span>
+                            </button>
+                        ) : (
+                            <div className="animate-fade-in text-center">
+                                <p className="text-sm text-purple-300 mb-2">✨ أمنيتك ✨</p>
+                                <p className="text-2xl font-amiri font-bold text-pink-200">{wish}</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="mt-8 flex gap-3">
+                        <input type="text" placeholder="اكتبي رسالتك لـ Ismail..." className="liquid-input flex-1 p-4 text-right" value={msg} onChange={e => setMsg(e.target.value)} />
+                        <button onClick={() => onWhatsApp(msg)} className="liquid-btn bg-green-600/30 px-6 text-green-200">
+                            <Icons.Send />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- MAIN APP ---
+        const App = () => {
+            const [stage, setStage] = React.useState('LOGIN');
+            const [user, setUser] = React.useState('');
+            const [pass, setPass] = React.useState('');
+            const [error, setError] = React.useState('');
+            const [countdown, setCountdown] = React.useState(3);
+            const [candlesLit, setCandlesLit] = React.useState(true);
+            const [showMessage, setShowMessage] = React.useState(false);
+            const [isPlaying, setIsPlaying] = React.useState(false);
+            
+            const audioRef = React.useRef(null);
+            const cheerRef = React.useRef(null);
+            const songUrl = "https://files.catbox.moe/yo1osw.mp3";
+            const cheerUrl = "https://files.catbox.moe/593740.mp3";
+
+            // Audio Logic
+            const toggleAudio = () => {
+                if(!audioRef.current) return;
+                if(isPlaying) audioRef.current.pause();
+                else audioRef.current.play();
+                setIsPlaying(!isPlaying);
+            };
+
+            const handleLogin = (e) => {
+                e.preventDefault();
+                // Updated login logic: Password must be 'ismail'
+                if (user.toLowerCase().trim() === 'marwa' && pass.toLowerCase().trim() === 'ismail') {
+                    setStage('COUNTDOWN');
+                    setError('');
+                    if(audioRef.current) {
+                        audioRef.current.volume = 0.5;
+                        audioRef.current.play().then(() => setIsPlaying(true)).catch(()=>console.log("Autoplay blocked"));
+                    }
+                } else {
+                    setError('معلومات غير صحيحة يا جميلتي');
+                }
+            };
+
+            React.useEffect(() => {
+                if (stage === 'COUNTDOWN') {
+                    const timer = setInterval(() => {
+                        setCountdown(prev => {
+                            if (prev <= 1) {
+                                clearInterval(timer);
+                                setStage('CELEBRATION');
+                                return 0;
+                            }
+                            return prev - 1;
+                        });
+                    }, 1000);
+                    return () => clearInterval(timer);
+                }
+            }, [stage]);
+
+            const handleBlow = () => {
+                setCandlesLit(false);
+                
+                // Cheer sound
+                if(cheerRef.current) {
+                    cheerRef.current.volume = 0.6;
+                    cheerRef.current.play();
+                }
+
+                // Intense Confetti
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ec4899', '#a855f7'] });
+                setTimeout(() => confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } }), 200);
+                setTimeout(() => confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } }), 200);
+
+                setTimeout(() => setShowMessage(true), 1500);
+            };
+
+            const handleWhatsApp = (msg) => {
+                const text = msg.trim() || "عيد ميلاد سعيد! 💗";
+                window.open(`https://wa.me/212679107509?text=${encodeURIComponent(text)}`, '_blank');
+            };
+
+            // Music Button Component (Inline for simple file)
+            const MusicButton = () => (
+                <button onClick={toggleAudio} className={`liquid-btn px-6 py-3 flex items-center gap-3 rounded-full ${isPlaying ? 'animate-beat border-pink-500/50' : ''}`}>
+                    {isPlaying ? <span className="text-pink-400"><Icons.Volume2/></span> : <span className="text-gray-300"><Icons.VolumeX/></span>}
+                    <span className="font-cairo text-sm">{isPlaying ? 'إيقاف الموسيقى' : 'تشغيل الموسيقى'}</span>
+                </button>
+            );
+
+            return (
+                <div className="min-h-screen relative pb-20">
+                    <HeartBackground />
+                    <audio ref={audioRef} src={songUrl} loop />
+                    <audio ref={cheerRef} src={cheerUrl} />
+
+                    {/* Stage 1: Login */}
+                    {stage === 'LOGIN' && (
+                        <div className="flex items-center justify-center min-h-screen px-4 animate-fade-in">
+                            <div className="liquid-card p-8 w-full max-w-sm text-center">
+                                <div className="w-20 h-20 mx-auto mb-6 liquid-icon-container flex items-center justify-center text-pink-500 shadow-lg">
+                                    <div className="animate-[beat_2s_infinite]"><Icons.Heart /></div>
+                                </div>
+                                <h1 className="text-3xl font-bold font-cairo mb-2">Welcome Marwa</h1>
+                                <p className="text-pink-200/70 text-sm mb-6">سجلي الدخول لرؤية مفاجأتك</p>
+                                <form onSubmit={handleLogin} className="space-y-4">
+                                    <div className="relative">
+                                        <input type="text" placeholder="Marwa" className="liquid-input w-full p-4 pl-12 text-right" value={user} onChange={e=>setUser(e.target.value)} />
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-pink-400"><Icons.User/></div>
+                                    </div>
+                                    <div className="relative">
+                                        <input type="password" placeholder="Password" className="liquid-input w-full p-4 pl-12 text-right" value={pass} onChange={e=>setPass(e.target.value)} />
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-pink-400"><Icons.Lock/></div>
+                                    </div>
+                                    {error && <p className="text-red-300 text-sm animate-pulse">{error}</p>}
+                                    <button type="submit" className="liquid-btn liquid-btn-primary w-full py-4 font-bold text-lg mt-2">فتح البوابة</button>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Stage 2: Countdown */}
+                    {stage === 'COUNTDOWN' && (
+                        <div className="flex flex-col items-center justify-center min-h-screen z-10 relative px-4">
+                            <div className="liquid-card p-8 md:p-14 text-center animate-fade-in w-full max-w-3xl border-white/20">
+                                <p className="text-2xl text-pink-200 mb-10 font-cairo drop-shadow-lg">المفاجأة تبدأ بعد...</p>
+                                
+                                {/* Countdown Visual */}
+                                <div className="text-6xl font-bold font-mono text-pink-300 animate-pulse mb-8">
+                                    00:00:0{countdown}
+                                </div>
+
+                                {/* Music Button in Countdown */}
+                                <div className="flex justify-center">
+                                    <MusicButton />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Stage 3: Celebration */}
+                    {stage === 'CELEBRATION' && (
+                        <div className="pt-10 px-4 max-w-4xl mx-auto">
+                            <div className={`transition-all duration-1000 ${showMessage ? 'opacity-0 hidden' : 'opacity-100'}`}>
+                                <Cake isLit={candlesLit} onBlow={handleBlow} />
+                                
+                                {/* Music Button for Cake Stage */}
+                                <div className="mt-12 flex justify-center">
+                                    <MusicButton />
+                                </div>
+                            </div>
+
+                            {showMessage && (
+                                <div className="animate-slide-up space-y-8">
+                                    <EnvelopeMessage onWhatsApp={handleWhatsApp} />
+                                    
+                                    {/* Music Button - Positioned below message */}
+                                    <div className="flex justify-center">
+                                        <MusicButton />
+                                    </div>
+
+                                    {/* Footer - Apple Liquid Glass Style */}
+                                    <div className="w-full flex justify-center pb-10">
+                                        <div className="px-10 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 shadow-[inset_0_0_15px_rgba(255,255,255,0.05),0_10px_30px_rgba(0,0,0,0.2)] flex items-center justify-center transform hover:scale-105 transition-all duration-500">
+                                            <span className="text-pink-200/90 text-xs md:text-sm font-cairo font-semibold tracking-widest uppercase flex items-center gap-2">
+                                                <span className="text-lg">✨</span> Created by Ismail for Marwa <span className="text-lg">✨</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {isPlaying && (
+                                <div className="fixed bottom-0 left-0 w-full p-4 z-50 flex items-end justify-center gap-1 h-4 pointer-events-none">
+                                    {[...Array(6)].map((_,i) => <div key={i} className="visualizer-bar" style={{animationDelay: `${i*0.1}s`}}></div>)}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
